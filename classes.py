@@ -21,3 +21,31 @@ class Credentials:
         '''
 
         Credentials.credentials_list.append(self)
+
+    def delete_credential(self):
+        '''
+        deletes a saved credential from the credential list
+        '''
+
+        Credentials.credentials_list.remove(self)
+
+    @classmethod
+    def find_by_account_name(cls,account):
+        '''
+        Method to find an account present by the account name
+        '''
+        for credential in cls.credentials_list:
+            if credential.account_name == account:
+                return credential
+
+    @classmethod
+    def account_exists(cls, account):
+        '''
+        Method to ascertain that an account exists
+        '''
+
+        for credential in cls.credentials_list:
+            if credential.account_name == account:
+                return True
+
+        return False
