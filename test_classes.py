@@ -20,7 +20,7 @@ class TestCredential(unittest.TestCase):
         '''
         TearDown method that cleans up after every test case
         '''
-        Credentials.credentials = []
+        Credentials.credentials_list = []
 
     def test_init(self):
         '''
@@ -34,8 +34,59 @@ class TestCredential(unittest.TestCase):
         '''
         Test the function to save credentials
         '''
-        self.new_credentials.save_credential()
-        self.assertEqual(len(self.new_credentials),1)
+        self.new_credentials.save_credentials()
+        self.assertEqual(len(Credentials.credentials_list),1)
+
+    def test_save_multiple_credentials(self):
+        '''
+        Test the saving of multiple credentials
+        '''
+        self.new_credentials.save_credentials()
+        test_credentials = Credentials("twitter", "Bot", "root")
+        random_credentials = Credentials("Spotify", "user", "username")
+        test_credentials.save_credentials()
+        random_credentials.save_credentials()
+        self.assertEqual(len(Credentials.credentials_list), 3)
+
+    def test_delete_credential(self):
+        '''
+        Test the deletion of one credential
+        '''
+        self.new_credentials.save_credentials()
+        test_credentials = Credentials("twitter", "Bot", "root")
+        random_credentials = Credentials("Spotify", "user", "username")
+        test_credentials.save_credentials()
+        random_credentials.save_credentials()
+        random_credentials.delete_credential()
+        self.assertEqual(len(Credentials.credentials_list),2)
+
+    def test_find_by_account_name(self):
+        '''
+        Test finding an account by it's name
+        '''
+        self.new_credentials.save_credentials()
+        test_credentials = Credentials("twitter", "Bot", "root")
+        random_credentials = Credentials("Spotify", "user", "username")
+        test_credentials.save_credentials()
+        random_credentials.save_credentials()
+        
+        found_account = Credentials.find_by_account_name("Spotify")
+        self.assertEqual(random_credentials.account_name, found_account.account_name)
+
+
+    def test_credential_exist(self):
+        '''
+        Test that a credential exists
+        '''
+        self.new_credentials.save_credentials()
+        test_credentials = Credentials("twitter", "Bot", "root")
+        random_credentials = Credentials("Spotify", "user", "username")
+        test_credentials.save_credentials()
+        random_credentials.save_credentials()
+        
+        account_exists = Credentials.account_exists("Spotify")
+        self.assertTrue(account_exists)
+
 
 if __name__ == '__main__':
     unittest.main()
