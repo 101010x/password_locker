@@ -4,7 +4,7 @@ class Credentials:
     '''
     Class to generate new instances of Credentials
     '''
-    credentials = []  # Empty credential list
+    credentials_list = []  # Empty credential list
 
     def __init__(self, account_name, user_name, password):
         '''
@@ -14,3 +14,10 @@ class Credentials:
         self.account_name = account_name
         self.user_name = user_name
         self.password = password
+
+    def save_credentials(self):
+        '''
+        Function to save credentials to credentials list
+        '''
+
+        Credentials.credentials_list.append(self)
