@@ -59,15 +59,43 @@ def main():
     user_name = input()
     
     if user_name:
-        print(f"\n Welcome {user_name}, Now, let me help you to create an account..... \n")
+        print(f"\n Welcome {user_name},let me help you to create an account to use Password Locker \n")
     else:
-        print("Weeelll, Since I don't know your name, let me call you User!!! Let us create an account then ......\n")
+        print("\n Weeelll, Since I don't know your name, let me call you User!!! Let us create an account then\n")
 
     print("--" * 80)
-
-
-
-
+    login_name = input(">>> Enter the username you would like to use \n")
+    login_password = getpass.getpass(">>> Enter the password you want to use \n")
+    confirm_password = getpass.getpass(">>> Confirm your password \n")
+    while True:
+        if login_password != confirm_password:
+            print("Passwords do not match!!")
+            login_password = getpass.getpass(">>> Reenter the password  \n")
+            confirm_password = getpass.getpass(">>> Reconfirm your password \n")
+        else:
+            print("Account Successfully created \n")
+            break
+    time.sleep(1)
+    while True:
+        login = input("Status: Logged Out \n Login to your account using the short code \lg\ or \login\ \n")
+        if login == 'lg' or login.lower() == 'login':
+            session_name = input("\n Username: ")
+            session_pass = getpass.getpass("\n Password: ")
+            print("Authenticating Credentials....")
+            time.sleep(3)
+            while True:
+                if session_name != login_name or session_pass != login_password:
+                    print("--"*80)
+                    print("Sorry Wrong username or password!  Try again...")
+                    session_name = input("\n Username: ")
+                    session_pass = getpass.getpass("\n Password: ")
+                else:
+                    print("User successfully logged in! \n")
+                    break
+        print("Use the following short codes to navigate the app \n cc-Create Credential \n fc-Find Credential by account \n dc-Display Credentials \n del-Delete Credential \n ex-Logout") 
+        break
+        #else:
+            #print("Sorry I did not get that!!! Try again, this time using \lg\ or \login\ \n")
 
 if __name__ == '__main__':
     '''
