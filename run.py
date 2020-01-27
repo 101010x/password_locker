@@ -54,6 +54,19 @@ def copy_password(account):
 
 def main():
 
+    time.sleep(1)
+    print("Hello, Welcome to Password Locker, What is your name?")
+    user_name = input()
+    
+    if user_name:
+        print(f"\n Welcome {user_name}, Now, let me help you to create an account..... \n")
+    else:
+        print("Weeelll, Since I don't know your name, let me call you User!!! Let us create an account then ......\n")
+
+    print("--" * 80)
+
+
+
 
 
 if __name__ == '__main__':
