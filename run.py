@@ -1,5 +1,6 @@
 from classes import Credentials
 from classes import User
+from classes import style
 import time, sys, random,string, getpass, re, inquirer, os, progressbar
 sys.path.append(os.path.realpath('.'))
 
@@ -55,12 +56,11 @@ def copy_password(account):
 
 def main():
     animation = "|/-\\"
-    for i in range(100):
+    for i in range(50):
         time.sleep(0.1)
         sys.stdout.write("Please wait while setting up")
         sys.stdout.write("\r" + animation[i % len(animation)])
         sys.stdout.flush()
-    time.sleep(1)
     print("Hello, Welcome to Password Locker, What is your name?")
     user_name = input()
     
@@ -70,27 +70,27 @@ def main():
         print("\n Weeelll, Since I don't know your name, let me call you User!!! Let us create an account then\n")
 
     print("--" * 80)
-    login_name = input(">>> Enter the username you would like to use \n")
-    login_password = getpass.getpass(">>> Enter the password you want to use \n")
-    confirm_password = getpass.getpass(">>> Confirm your password \n")
+    login_name = input(style.cyan(">>> Enter the username you would like to use \n"))
+    login_password = getpass.getpass(style.cyan(">>> Enter the password you want to use \n"))
+    confirm_password = getpass.getpass(style.cyan(">>> Confirm your password \n"))
     while True:
         if login_password != confirm_password:
-            print("Passwords do not match!!")
+            print(style.red("Passwords do not match!!"))
             login_password = getpass.getpass(">>> Reenter the password  \n")
             confirm_password = getpass.getpass(">>> Reconfirm your password \n")
         else:
-            print("Account Successfully created \n")
+            print(style.green("Account Successfully created \n") + style.reset(""))
             break
     time.sleep(1)
     while True:
-        login = input("Status: Logged Out \n Login to your account using the short code \lg\ or \login\ \n")
+        login = input(style.red("Status:") + style.yellow("Logged Out \n")+ style.reset("Login to your account using the short code \lg\ or \login\ \n"))
         if login == 'lg' or login.lower() == 'login':
             session_name = input("\n Username: ")
             session_pass = getpass.getpass("\n Password: ")
+            print(style.blue("Authenticating Credentials....") + style.reset(""))
             for i in progressbar.progressbar(range(100)):
                 time.sleep(0.02)
-            print("Authenticating Credentials....")
-            time.sleep(3)
+            time.sleep(1)
             while True:
                 if session_name != login_name or session_pass != login_password:
                     print("--" *80)
@@ -98,15 +98,15 @@ def main():
                     session_name = input("\n Username: ")
                     session_pass = getpass.getpass("\n Password: ")
                 else:
-                    print("User successfully logged in! \n")
+                    print(style.green("User successfully logged in! \n")+style.reset(""))
                     break
             break
         else:
-            print("\n Sorry I did not get that!!! Try again, this time using \lg\ or \login\ ")
+            print(style.red("\n Sorry I did not get that!!! Try again, this time using \lg\ or \login\ ") + style.reset(""))
     
     print("--" *80)
     while True:
-        user_input = input("Use the following short codes to navigate the app \n cc-Create Credential \n fc-Find Credential by account \n dc-Display Credentials \n del-Delete Credential \n ex-Logout \n")
+        user_input = input("Use the following short codes to navigate the app \n" + style.yellow("cc") + style.cyan("-Create Credential \n") + style.yellow("fc") + style.cyan("-Find Credential by account \n") + style.yellow("dc") + style.cyan("-Display Credentials \n") + style.yellow("del") + style.cyan("-Delete Credential \n") + style.yellow("ex") + style.cyan("-Logout \n") + style.reset(""))
         if user_input == 'cc':
             question_create = [inquirer.List('account',message='Are you adding a new or existing account?',choices=['New','Existing'],),]
             answer_create = inquirer.prompt(question_create)
@@ -189,10 +189,24 @@ def main():
             else:
                 print(f"Account {search_delete} does not exist")
         elif user_input == 'ex':
-            print("Bye....")
+            quit_question = [inquirer.List('quit',message='Before you leave, would you want to export saved credentials?',choices=['yes','no'])]
+            quit_answer = inquirer.prompt(quit_question)
+            quit_response = quit_answer.get('quit','')
+            if quit_response == 'no':
+                print("Bye")
+                sys.stdout.write("\r (•◡•)")
+                print("\n")
+            else:
+                with open("exports.txt", "w") as handle:
+                    if display_credentials():
+                        for credential in display_credentials():
+                            handle.write(f"| Account: {credential.account_name} | UserName: {credential.user_name} | Password: {credential.password} |")            
+                print("Credentials exported \n Bye")
+                sys.stdout.write("\r (•◡•)")
+                print("\n")
             break
         else:
-            print("Sorry, I did not get that!")
+            print(style.red("Sorry, I did not get that!") + style.reset(""))
 
 
 
