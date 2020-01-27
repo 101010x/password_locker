@@ -151,13 +151,29 @@ def main():
         search_account = input("Enter the account you wish to searh for")
         if credential_exist(search_account):
             find_credential(search_account)
-                print("-"*40)
-                print(f"| Account: {search_account.account_name} | UserName: {search_account.user_name} | Password: {search_account.password} |")
-                print("-"*40 + "\n")
+            print("-"*40)
+            print(f"| Account: {search_account.account_name} | UserName: {search_account.user_name} | Password: {search_account.password} |")
+            print("-"*40 + "\n")
         else:
             print(f"Sorry it seems the Credential {search_account} does not exist")
     elif user_input == 'del':
-
+        search_delete = input("Enter the account credentials you wish to delete:")
+        if credential_exist(search_delete):
+            to_delete = find_credential(search_delete)
+            sure_question = [inquirer.List('sure',message='Are you sure you wish to delete the credential?',choices=['yes','no'])]
+            sure_answer = inquirer.prompt(sure_question)
+            sure_response = sure_answer.get('sure','')
+            if sure_response == 'no':
+                print(f"Credential for {to_delete.account_name} will not be deleted")
+            else:
+                print(f"Credential for {to_delete.account_name} will be deleted")
+                delete_credential(to_delete)
+                print("Credential deleted")
+        else:
+            print(f"Account {search_delete} does not exist")
+    elif user_input == 'ex':
+        print("Bye....")
+        break
 
 
 
