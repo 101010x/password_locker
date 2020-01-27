@@ -87,6 +87,20 @@ class TestCredential(unittest.TestCase):
         account_exists = Credentials.account_exists("Spotify")
         self.assertTrue(account_exists)
 
+    def test_display_credentials(self):
+        '''
+        Test that credentials can be displayed
+        '''
+        self.assertEqual(Credentials.display_credentials(), Credentials.credentials_list)
+
+    def test_copy_password(self):
+        '''
+        Test to copy the password to the clipboard
+        '''
+        self.new_credentials.save_credentials()
+        Credentials.copy_password("instagram")
+        self.assertEqual(self.new_credentials.password, pyperclip.paste())
+
 
 if __name__ == '__main__':
     unittest.main()
