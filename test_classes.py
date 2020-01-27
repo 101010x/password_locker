@@ -1,5 +1,6 @@
 import unittest
 from classes import Credentials
+from classes import User 
 import pyperclip
 
 class TestCredential(unittest.TestCase):
@@ -12,7 +13,7 @@ class TestCredential(unittest.TestCase):
 
     def setUp(self):
         '''
-        SetUp method that id s performed everytime a test case is run
+        SetUp method that is performed everytime a test case is run
         '''
         self.new_credentials = Credentials("instagram","usertest","userpass")
 
@@ -100,6 +101,32 @@ class TestCredential(unittest.TestCase):
         self.new_credentials.save_credentials()
         Credentials.copy_password("instagram")
         self.assertEqual(self.new_credentials.password, pyperclip.paste())
+
+class TestUser(unittest.TestCase):
+    '''
+    Test class that defines test case for user class
+
+    Args:
+        unittest.TestCase: Class that helps defining test cases
+    '''
+    def setUp(self):
+        '''
+        Prepare for each test case
+        '''
+        self.new_user = User("Mutugi", "helloworld")
+
+    def tearDown(self):
+        '''
+        Clean up after every test case
+        '''
+        User.user_list = []
+
+    def test_init(self):
+        '''
+        Test the initialization of the list correctly
+        '''
+        self.assertEqual(self.new_user.name,"Mutugi")
+        self.assertEqual(self.new_user.password, "helloworld");
 
 
 if __name__ == '__main__':
