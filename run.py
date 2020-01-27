@@ -14,7 +14,7 @@ def create_credentials(account_name,user_name,password):
     '''
     Function to create credentials
     '''
-    new_credential = Credenetial(account_name,user_name,password)
+    new_credential = Credentials(account_name,user_name,password)
     return new_credential
 
 def delete_credential(credential):
@@ -126,7 +126,16 @@ def main():
                     lettersAndDigits = string.ascii_letters + string.digits
                     return ''.join(random.choice(lettersAndDigits) for i in range(int(pass_length)))
                 credential_password = generate_random(password_length)
-                print("Your auto-generated random number of {} characters is {}".format(password_length,credential_password))
+                print("Your auto-generated password of {} characters is {}".format(password_length,credential_password))
+        question_save = [inquirer.List('save', message='Would you like to save your credentials?', choices=['yes','no'])]
+        question_saved = inquirer.prompt(question_save)
+        answer_save = question_saved.get('save', '')
+        if answer_save == 'no':
+            print(f'Your credential {account_name} has been discarded')
+        else:
+            save_credential(create_credentials(account_name,user_name,credential_password))
+            time.sleep(1.5)
+            print(f"Your credential for {account_name}: {user_name} & {credential_password} has been saved")
             
 if __name__ == '__main__':
     '''
