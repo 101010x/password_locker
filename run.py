@@ -1,6 +1,6 @@
 from classes import Credentials
 from classes import User
-import time, sys, random,string, getpass, re, inquirer, os
+import time, sys, random,string, getpass, re, inquirer, os, progressbar
 sys.path.append(os.path.realpath('.'))
 
 def create_user(name,password):
@@ -54,7 +54,12 @@ def copy_password(account):
     return Credentials.copy_password(account)
 
 def main():
-
+    animation = "|/-\\"
+    for i in range(100):
+        time.sleep(0.1)
+        sys.stdout.write("Please wait while setting up")
+        sys.stdout.write("\r" + animation[i % len(animation)])
+        sys.stdout.flush()
     time.sleep(1)
     print("Hello, Welcome to Password Locker, What is your name?")
     user_name = input()
@@ -82,6 +87,8 @@ def main():
         if login == 'lg' or login.lower() == 'login':
             session_name = input("\n Username: ")
             session_pass = getpass.getpass("\n Password: ")
+            for i in progressbar.progressbar(range(100)):
+                time.sleep(0.02)
             print("Authenticating Credentials....")
             time.sleep(3)
             while True:
@@ -132,14 +139,14 @@ def main():
             question_saved = inquirer.prompt(question_save)
             answer_save = question_saved.get('save', '')
             if answer_save == 'no':
-                print(f'Your credential {account_name} has been discarded \n')
+                print(f'Your credential {account_name} has been discarded')
             else:
                 save_credential(create_credentials(account_name,user_name,credential_password))
                 time.sleep(1.5)
-                print(f"Your credential for {account_name}: {user_name} & {credential_password} has been saved \n")
+                print(f"Your credential for {account_name}: {user_name} & {credential_password} has been saved")
         elif user_input == 'dc':
             if display_credentials():
-                print('Here are your credentials \n' + '-'*30)
+                print('Here are your credentials \n' + '-'*20)
                 for credential in display_credentials():
                     print("-"*40)
                     print(f"| Account: {credential.account_name} | UserName: {credential.user_name} | Password: {credential.password} |")
@@ -149,7 +156,7 @@ def main():
                 print("\n You don't seem to have any saved credentials yet!! \n")
 
         elif user_input == 'fc':
-            search_account = input("Enter the account you wish to searh for \t")
+            search_account = input("Enter the account you wish to searh for")
             if credential_exist(search_account):
                 found_account = find_credential(search_account)
                 print("-"*40)
@@ -162,10 +169,10 @@ def main():
                     continue
                 else:
                     copy_password(found_account.account_name)
-                    print('Password successfully copied to clipboard \n')
+                    print('Password successfully copied to clipboard')
 
             else:
-                print(f"Sorry it seems the Credential {search_account} does not exist \n")
+                print(f"Sorry it seems the Credential {search_account} does not exist")
         elif user_input == 'del':
             search_delete = input("Enter the account credentials you wish to delete:")
             if credential_exist(search_delete):
@@ -185,7 +192,8 @@ def main():
             print("Bye....")
             break
         else:
-            print("Sorry,I did not get that, try again....")    
+            print("Sorry, I did not get that!")
+
 
 
 
