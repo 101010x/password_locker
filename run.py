@@ -150,10 +150,19 @@ def main():
     elif user_input == 'fc':
         search_account = input("Enter the account you wish to searh for")
         if credential_exist(search_account):
-            find_credential(search_account)
+            found_account = find_credential(search_account)
             print("-"*40)
-            print(f"| Account: {search_account.account_name} | UserName: {search_account.user_name} | Password: {search_account.password} |")
+            print(f"| Account: {found_account.account_name} | UserName: {found_account.user_name} | Password: {found_account.password} |")
             print("-"*40 + "\n")
+            copy_question = [inquirer.List('copy',message='Do you wish to copy account\'s password to clipboard?',choices=['yes','no'])]
+            copy_answer = inquirer.prompt(copy_question)
+            copy_response = copy_answer.get('copy','')
+            if copy_response == 'no':
+                continue
+            else:
+                copy_password(found_account)
+                print('Password successfully copied to clipboard')
+
         else:
             print(f"Sorry it seems the Credential {search_account} does not exist")
     elif user_input == 'del':
