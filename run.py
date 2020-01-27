@@ -136,7 +136,32 @@ def main():
             save_credential(create_credentials(account_name,user_name,credential_password))
             time.sleep(1.5)
             print(f"Your credential for {account_name}: {user_name} & {credential_password} has been saved")
-            
+    elif user_input == 'dc':
+        if display_credentials():
+            print('Here are your credentials \n' + '-'*20)
+            for credential in display_credentials():
+                print("-"*40)
+                print(f"| Account: {Credential.account_name} | UserName: {Credential.user_name} | Password: {Credential.password} |")
+                print("-"*40 + "\n")
+
+        else:
+            print("\n You don't seem to have any saved credentials yet!! \n")
+
+    elif user_input == 'fc':
+        search_account = input("Enter the account you wish to searh for")
+        if credential_exist(search_account):
+            find_credential(search_account)
+                print("-"*40)
+                print(f"| Account: {search_account.account_name} | UserName: {search_account.user_name} | Password: {search_account.password} |")
+                print("-"*40 + "\n")
+        else:
+            print(f"Sorry it seems the Credential {search_account} does not exist")
+    elif user_input == 'del':
+
+
+
+
+
 if __name__ == '__main__':
     '''
     Executes main function if main function hasn't been imported
