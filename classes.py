@@ -91,7 +91,8 @@ class User:
         self.password = password
 
 # Group of Different functions for different styles
-class style():
+# Class that uses ANSI Codes. provides some support for windows clients.
+class style:
     black = lambda x: '\033[30m' + str(x)
     red = lambda x: '\033[31m' + str(x)
     green = lambda x: '\033[32m' + str(x)

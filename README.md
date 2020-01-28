@@ -57,9 +57,9 @@ This include the following mentioned however if you dont have the set below
     ```
     python3 run.py
     ```
-    - Take note. The os relative path is changed, so, you cannot change the file to be executable using
+    or
     ```
-    ~chmod +x run.py~
+    ./run.py
     ```
 
 6. Follow through the cli application.
