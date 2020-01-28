@@ -1,8 +1,7 @@
 [![codebeat badge](https://codebeat.co/badges/6ee2c056-6d27-4174-9d28-90056df0c898)](https://codebeat.co/projects/github-com-mutugiii-password_locker-master)
 
 # Password Locker
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.14
-Here is a [Link](https://github.com/Mutugiii/password_locker) to the project repository
+This project is written in python. Here is a [Link](https://github.com/Mutugiii/password_locker) to the project repository
 
 # DESCRIPTION
 
@@ -16,6 +15,8 @@ A python CLI program that acts as a place to store passwords. Users can generate
 - Users can generate random passwords
 
 - Users can view various credentials
+
+- Users can export credentials
 
 
 # Prerequisites
@@ -58,7 +59,7 @@ This include the following mentioned however if you dont have the set below
     ```
     - Take note. The os relative path is changed, so, you cannot change the file to be executable using
     ```
-    chmod +x run.py
+    ~chmod +x run.py~
     ```
 
 6. Follow through the cli application.
